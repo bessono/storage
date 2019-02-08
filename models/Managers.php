@@ -62,13 +62,17 @@ class Managers extends \yii\db\ActiveRecord implements IdentityInterface {
     }
 
     public function checkBan() {
-        $result = $this->findOne(['login' => $this->login, 'password' => md5($this->password)]);
+        if($result = $this->findOne(['login' => $this->login, 'password' => md5($this->password)])){
+        
         Yii::debug("B@E models/Managers::checkBan ban=" . $result->ban);
         if ($result->ban == 'y') {
             $this->addError("login", "Пользователь в бане");
             return false;
         } else {
             return true;
+        }
+        } else {
+            return false;
         }
     }
 
@@ -94,10 +98,23 @@ class Managers extends \yii\db\ActiveRecord implements IdentityInterface {
         
         $result = $this->save(false);
         //exit(var_dump($this->role));
+        
+
+
         // Назначаем роль в методе afterSave модели User
+        
         $auth = Yii::$app->authManager;
         $editor = $auth->getRole($this->role); // Получаем роль editor
+        
+        $viewAdminPage = $auth->createPermission("viewAdminPage");
+        $viewAdminPage = $auth->createPermission("editData");
+        $viewAdminPage = $auth->createPermission("viewData");
+        
+        $auth->addChild($editor,$viewAdminPage);
+        $auth->addChild($editor,$readData);
+        $auth->addChild($editor,$editData);
         $auth->assign($editor, $this->id); // Назначаем пользователю, которому принадлежит модель User
+
         if ($this->errors == null) {
             return "Пользователь добавлен";
         } else {
@@ -140,8 +157,9 @@ class Managers extends \yii\db\ActiveRecord implements IdentityInterface {
         }
         $auth = Yii::$app->authManager;
         $editor = $auth->getRole($this->role); // Получаем роль editor
-       // $auth->assign($editor, $this->id);
-        $auth->revoke($editor, $this->id);
+        
+        $auth->revoke($editor, $this->id); 
+        $auth->assign($editor, $this->id); // назначение
         return $this->updateAll($update_array, ['id'=>$this->id]);
     }
     

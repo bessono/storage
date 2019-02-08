@@ -13,7 +13,7 @@ class m190207_201218_insert_admin_admin_in_managers extends Migration
     public function safeUp()
     {
         $this->insert("managers",['name'=>'Administrator',
-            'login'=>'admin','password'=>md5('admin'));
+            'login'=>'admin','password'=>md5('admin')]);
     }
 
     /**

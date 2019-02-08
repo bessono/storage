@@ -36,9 +36,16 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label'=>'Скад','items'=>[
+                ['label'=>'Цены','items'=>[
+                    ['label'=>'Добавить тип цен','url'=>['/costs/add-form']],
+                    ['label'=>'Редактировать тип цен','url'=>['/costs/view-form']]
+                ]]
+            ]],
             ['label'=>'Настройки','items'=>[
                 ['label'=>'Пользователи','items'=>[
                     ['label'=>'Добавить нового','url'=>['/managers/add-form']],

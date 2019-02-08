@@ -48,8 +48,7 @@ class RbacController extends Controller{
         $auth->addChild($saler,$readData);
         
         $auth->assign($admin, 1);
-        $auth->assign($operator, 2);
-        $auth->assign($saler, 3);
+        
         
     }
 }
