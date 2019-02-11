@@ -44,6 +44,9 @@ AppAsset::register($this);
                 ['label'=>'Цены','items'=>[
                     ['label'=>'Добавить тип цен','url'=>['/costs/add-form']],
                     ['label'=>'Редактировать тип цен','url'=>['/costs/view-form']]
+                ]],
+                ['label'=>'Группы товаров','items'=>[
+                    ['label'=>'Редактировать','url'=>['products-category/add-form']]
                 ]]
             ]],
             ['label'=>'Настройки','items'=>[
