@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "costs".
  *
@@ -51,8 +52,19 @@ class Costs extends \yii\db\ActiveRecord
         if($this->save()){
             return "Сохранение успешно";
         } else {
-            return "Ошибка обратитесь к разработчику";
             Yii::debug("B@E".var_dump($this));
+            return "Ошибка обратитесь к разработчику";
         }
     }
+    
+    public function deleteCost($id){
+        $id = intval($id);
+        if($this->deleteAll("`id`=".$id)){
+            return "Удалено";
+        } else {
+            return "Ошибка удаления";
+        }
+
+    }
+
 }

@@ -49,7 +49,7 @@ class ManagersController extends \yii\web\Controller
         $provider = new ActiveDataProvider([
             'query' => $model->find(),
             'pagination' => [
-                'pageSize' => 10
+                'pageSize' => Yii::$app->params['default_pagesize']
             ]
         ]);
         
